@@ -14,7 +14,6 @@ def getDriver(request, getBrowser):
         _driver = webdriver.Firefox(executable_path=r'C:\BrowserDriver\geckodriver.exe', options=options)
     else:
         options = Options()
-        options.headless = True
         options.add_argument("start-maximized")
         _driver = webdriver.Chrome(service=Service(executable_path=r'C:\BrowserDriver\chromedriver.exe'), options=options)
     _driver.maximize_window()
