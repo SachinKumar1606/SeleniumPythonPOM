@@ -18,6 +18,8 @@ class DashboardPage(BasePage):
     selectedFilter = "//span[contains(text(),'{selectedFilterName}')]"
     elementsName = "(//div/a/div)"
     elementsPrize = "(//div[@class='pricebar']/div)"
+    cartLink = By.XPATH, "//a[@class='shopping_cart_link']"
+    productDescription = "//div[contains(text(), '{productName}')]/ancestor::div[@class='inventory_item_label']/div"
 
     def countOfItems(self, eleCount):
         count = self.get_count(self.inventoryList)
@@ -68,3 +70,11 @@ class DashboardPage(BasePage):
             elementListOriginal.append(item.replace("$", ''))
         sortedElementList = sorted(elementListOriginal, key=lambda x: float(x), reverse=True)
         assert sortedElementList == elementListOriginal
+
+    def navigateToCartPage(self):
+        self.do_click(self.cartLink)
+
+    def getProductDescription(self, product):
+        productDescription = By.XPATH, self.productDescription.format(productName=product)
+        productDescriptionText = self.get_element_text(productDescription)
+        return productDescriptionText
